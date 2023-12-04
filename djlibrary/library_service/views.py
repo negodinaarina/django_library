@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.shortcuts import render, redirect
+from django.http import HttpResponseBadRequest
 import db.db_methods as database
 
 
@@ -22,6 +22,21 @@ def book(request, id):
         return render(request, "book.html", context=data)
     except:
         return HttpResponseBadRequest("Некорректные данные")
+
+
+def add_book(request):
+    if request.method == "GET":
+        return render(request, "add_book.html")
+    elif request.method == "POST":
+        data = request.POST.dict()
+        if database.add_book(data):
+            return redirect("/")
+        else:
+            return HttpResponseBadRequest("Некорректные данные")
+
+
+def add_author(request, *args, **kwargs):
+    pass
 
 
 # def edit_book(request, id):
