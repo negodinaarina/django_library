@@ -1,9 +1,23 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+import psycopg2
 
 
 def index(request):
-    return render(request, "index.html")
+    conn = psycopg2.connect(
+        database="library", user='postgres', password='1111', host='localhost', port='5433')
+    conn.autocommit = True
+    cursor = conn.cursor()
+    if request.method == "GET":
+        cursor.execute('''SELECT * FROM books JOIN authors ON books.author_id = authors.id;''')
+        result = cursor.fetchall()
+        data = {"data": result}
+    elif request.method == "POST":
+        name = request.POST.get("name", "Undefined")
+        cursor.execute(f'''SELECT * FROM books JOIN authors ON books.author_id = authors.id WHERE title LIKE '%{name}%'; ''')
+        result = cursor.fetchall()
+        data = {"data": result}
+    return render(request, "index.html", context=data)
 
 
 def about(request):
@@ -20,3 +34,4 @@ def places(request):
 
 def questions(request):
     return render(request, "questions.html")
+

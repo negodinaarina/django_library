@@ -1,6 +1,20 @@
 {% extends "base.html" %}
 {% block body %}
 <div class="container">
-    <h1>KIIL MEEE</h1>
+    <form method="post" action="/">
+        {% csrf_token %}
+        <p>Название:<br> <input class="form-control" name="name" placeholder="Введите название книги"/></p>
+        <input class="btn btn-secondary" type="submit" value="Поиск" />
+    </form>
+    <br>
+    {%for book in data%}
+        <div class="card border-dark mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{book.1}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{book.4}}</h6>
+                <p class="card-text">{{book.8}}</p>
+            </div>
+        </div><br>
+    {%endfor%}
 </div>
 {% endblock body %}
