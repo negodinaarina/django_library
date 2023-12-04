@@ -1,4 +1,5 @@
 import psycopg2
+import datetime
 
 
 def create_cursor():
@@ -53,12 +54,31 @@ def delete_book(id): pass
 
 def add_book(data):
     cursor = create_cursor()
-    sql = '''INSERT INTO books(title, author_id, genre_id, publication_date, description, quantity_in_stock) 
-    VALUES (%s, %s, %s, %s, %s, %s)'''
+    sql = '''INSERT INTO books(title, author_id, genre_id, publication_date, 
+    description, quantity_in_stock) VALUES (%s, %s, %s, %s, %s, %s)'''
     try:
         author_id = get_author(data["author"])
         genre_id = get_genre(data["genre"])
-        cursor.execute(sql, (data["title"], author_id, genre_id, data["date"], data["descript"], 10))
+        cursor.execute(sql, (data["title"], author_id, genre_id,
+                             data["date"], data["descript"], 10))
         return True
-    except:
-        return False
+    except: return False
+
+
+def add_author(data):
+    cursor = create_cursor()
+    sql = '''INSERT INTO authors(author_name, birth_date) VALUES (%s, %s)'''
+    try:
+        cursor.execute(sql, (data["author_name"], data["birthday"]))
+        return True
+    except: return False
+
+
+def add_genre(data):
+    cursor = create_cursor()
+    cursor.execute('''INSERT INTO genres(genre_name) VALUES (%s)''', (data["genre_name"],))
+    try:
+        return True
+    except: return False
+
+

@@ -11,9 +11,14 @@ sql = '''CREATE DATABASE library;'''
 cursor.execute(sql)
 print("Database created successfully........")
 
-sql = "\c library;"
-cursor.execute(sql)
-print("Connected to database........")
+conn.close()
+
+conn = psycopg2.connect(
+   database="library", user='postgres', password='1111', host='localhost', port='5433'
+)
+conn.autocommit = True
+
+cursor = conn.cursor()
 
 sql = '''CREATE TABLE IF NOT EXISTS authors
 (
