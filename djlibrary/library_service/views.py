@@ -3,4 +3,20 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse("Алоха")
+    return render(request, "index.html")
+
+
+def about(request):
+    return render(request, "about.html")
+
+
+def contacts(request):
+    return render(request, "contacts.html")
+
+
+def places(request):
+    return render(request, "places.html")
+
+
+def questions(request):
+    return render(request, "questions.html")
