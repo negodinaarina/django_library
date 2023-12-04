@@ -13,8 +13,9 @@ def index(request):
         result = cursor.fetchall()
         data = {"data": result}
     elif request.method == "POST":
-        name = request.POST.get("name", "Undefined")
-        cursor.execute(f'''SELECT * FROM books JOIN authors ON books.author_id = authors.id WHERE title LIKE '%{name}%'; ''')
+        name = request.POST.get("name", "")
+        author = request.POST.get("author", "")
+        cursor.execute(f'''SELECT * FROM books JOIN authors ON books.author_id = authors.id WHERE title LIKE '%{name}%' AND authors.author_name LIKE '%{author}%' ''')
         result = cursor.fetchall()
         data = {"data": result}
     return render(request, "index.html", context=data)

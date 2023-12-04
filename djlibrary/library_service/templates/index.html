@@ -4,6 +4,7 @@
     <form method="post" action="/">
         {% csrf_token %}
         <p>Название:<br> <input class="form-control" name="name" placeholder="Введите название книги"/></p>
+        <p>Автор:<br> <input class="form-control" name="author" placeholder="Введите автора книги"/></p>
         <input class="btn btn-secondary" type="submit" value="Поиск" />
     </form>
     <br>
