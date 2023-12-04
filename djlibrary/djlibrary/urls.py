@@ -8,4 +8,5 @@ urlpatterns = [
     path('contacts', views.contacts),
     path('places', views.places),
     path('questions', views.questions),
+    path('book/<int:id>', views.book, name="book_page"),
 ]
