@@ -1,24 +1,12 @@
 import psycopg2
-
+import os
 conn = psycopg2.connect(
-   database="postgres", user='postgres', password='1111', host='localhost', port='5433'
-)
+   database=f"{os.environ.get('POSTGRES_NAME')}", user=f"{os.environ.get('POSTGRES_USER')}",
+   password=f"{os.environ.get('POSTGRES_PASSWORD')}", host='db', port='5432')
 conn.autocommit = True
 
 cursor = conn.cursor()
 
-sql = '''CREATE DATABASE library;'''
-cursor.execute(sql)
-print("Database created successfully........")
-
-conn.close()
-
-conn = psycopg2.connect(
-   database="library", user='postgres', password='1111', host='localhost', port='5433'
-)
-conn.autocommit = True
-
-cursor = conn.cursor()
 
 sql = '''CREATE TABLE IF NOT EXISTS authors
 (

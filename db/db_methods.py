@@ -1,10 +1,11 @@
-import psycopg2
+import psycopg2, os
 import datetime
 
 
 def create_cursor():
     conn = psycopg2.connect(
-        database="library", user='postgres', password='1111', host='localhost', port='5433')
+        database=f"{os.environ.get('POSTGRES_NAME')}", user=f"{os.environ.get('POSTGRES_USER')}",
+        password=f"{os.environ.get('POSTGRES_PASSWORD')}", host='db', port='5432')
     conn.autocommit = True
     cursor = conn.cursor()
     return cursor
