@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseBadRequest
-import db.db_methods as database
+import library_service.db_methods as database
 
 
 def index(request):
@@ -21,7 +21,7 @@ def book(request, id):
         data = {"data": result}
         return render(request, "book.html", context=data)
     except:
-        return HttpResponseBadRequest("Некорректные данные")
+        return HttpResponseBadRequest("Кажется, введеный индекс в неверном формате")
 
 
 def add_book(request):
@@ -32,7 +32,7 @@ def add_book(request):
         if database.add_book(data):
             return redirect("/")
         else:
-            return HttpResponseBadRequest("Некорректные данные")
+            return HttpResponseBadRequest("Ошибочка вышла")
 
 
 def add_author(request):
@@ -43,7 +43,7 @@ def add_author(request):
         if database.add_author(data):
             return redirect("/")
         else:
-            return HttpResponseBadRequest("Некорректные данные")
+            return HttpResponseBadRequest("Не получилось добавить автора")
 
 
 def add_genre(request):
